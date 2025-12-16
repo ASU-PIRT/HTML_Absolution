@@ -8,6 +8,10 @@ from pyscript.web import page, when
 message = "hello worl"
 x = np.array([1,123])
 
+# Temporary Graph for Testing
+fig, ax = plt.subplots()
+display(fig)
+
 #for terminal
 print(message)
 print(x * 2)
