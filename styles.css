@@ -1,0 +1,38 @@
+/* -- CSS File Under Construction -- */
+
+@font-face {
+    font-family: custom;
+    src: url(fonts/posyden-font/PosydenRegular-y9Vm.otf);
+}
+
+@font-face {
+    font-family: custom2;
+    src: url(fonts/spongeboy-kontra-dusiciel-font/SpongeboyKontraDusiciel-rV1L.ttf);
+}
+
+:root{
+    /* Font */
+    --font: custom, 'Franklin Gothic Medium', sans-serif;
+    --font2: custom2, 'Franklin Gothic Medium', sans-serif;
+}
+
+*{
+    color-scheme: light dark;
+}
+
+header{
+    margin: auto;
+}
+
+h1{
+    font-family: var(--font)
+}
+
+h2{
+    margin: auto;
+    font-family: var(--font2)
+}
+
+footer{
+
+}
