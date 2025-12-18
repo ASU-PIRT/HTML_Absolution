@@ -20,7 +20,7 @@ The `<h3>`is being used for the ***2nd tier*** header that introduces the main b
 
 The `<h2>` is being used by the ***4th tier*** header, ie. the subsections of the main sections designated by the ***3rd tier header***.
 
-#### To do (in order):
+#### <span style="color: darkorange;">Solution (in order):</span>
 | Banner:
 * Remove the `<table>` tags from the banner. (refer to original html washer code.)
 * Split the content of `<h1>` into two separate `<h1>` tags.
@@ -29,10 +29,19 @@ The `<h2>` is being used by the ***4th tier*** header, ie. the subsections of th
 
 | Fixing header tags.
 * Change all `<h2>` tags to `<h4>` tags for semantic purposes.
-* Change all `<h3>` tags to `<h2>` tags for semantic purposes.
-* Replace all `<h1>` after the first into `<h3>` (for semantic purposes).
+* Change all `</h2>` tags to `</h4>` tags for semantic purposes.
 
-More notes:
+<br>
+
+* Change all `<h3>` tags to `<h2>` tags for semantic purposes.
+* Change all `</h3>` tags to `</h2>` tags for semantic purposes.
+
+<br>
+
+* Replace all `<h1>` after the first into `<h3>` for semantic purposes.
+* Replace all `</h1>` after the first into `</h3>` for semantic purposes.
+
+#### <span style="color: darkorange;">More notes:</span>
 * Headers 3 and 4 have been changed to `display: in-line block` in order to accommodate highlighting.
 
 ### <span style="color: darkorange;">Sections & Header Links</span>
@@ -51,7 +60,7 @@ Useful functionality for each header is link to its own section. For this reason
 
 ## Tables:
 
-Notes on tables:
+### <span style="color: darkorange;"> Notes on Tables</span>
 
 * For some reason, every `<td>` entry includes `<p>`. These should probably be deleted.
     * The entries also have attributes for column and row size. I guess it can't hurt.
@@ -66,6 +75,10 @@ Notes on tables:
         * This solution should work the same for images and labels!
 
 * The tags `<thead>`, `<tbody>`, `<tfooter>` are not present in the table. They can can probably be used for formatting purposes.
+
+
+
+* <span style="color: Chartreuse;">***New!***</span> It is convenient to also include tables in the block-figure class for formatting purposes. Should there be a reason to make a separate "block-table" class. It should be noted here.
 
 ## Images:
 
@@ -92,6 +105,10 @@ Notes on image formatting:
 
 * Some images have a transparent background, so including a white background with some alpha may be useful for accessibility reasons.
 
+* <span style="color: Chartreuse;">***New!***</span> It would be nice if every block figure, table, and equation had an automatically created ID that it both links to and can be referred to throughout the document.
+
+## For Both Tables and Figures
+
 ### <span style="color: darkorange;">Proposed Solution</span>
 
 Have the formatting be settled by an accompanying file, such as a .csv created from a spreadsheet like the one created for PHY 132.
@@ -104,17 +121,33 @@ Have the formatting be settled by an accompanying file, such as a .csv created f
 
 <br>
 
-* If a figure:
+* If a **figure** (or ***table***):
     * Insert the html attribute `class="figure"` in the img tag.
     * In the `<p>` tag below (or in its absence: above) the corresponding `<img>` tag, insert the html attribute `class="description"`.
     * *Maybe* create a new block container `<div class='figure-block>` for both formatted into a rows grid, such that the description always appears at the bottom.
-* If a block-equation:
-    * Insert the html attribute `class="block-equation"` in the img tag.
+* If a **block-equation**:
+    * Insert the html attribute `class="equation-block"` in the img tag.
     * Pair the image with a new inserted block that includes equation number (equation count can be kept track of in python code).
         * Alternatively, an additional flag that includes the number can be created in the .csv file / spreadsheet.
     * Contain both blocks in a unique div tag (user defined) or with `class=block-equation` instead. (Decide between using this for the image or the container.) 
-* If an in-line equation:
+* If an **in-line equation**:
     * Insert the html attribute `class="inline equation"`
+
+<br>
+
+* <span style="color: Chartreuse;">***New!***</span> Using Python, give every **block equation**, **table**, and **figure** have an automatically generated ID attribute.<br>
+
+    * Said ID can be taken from:
+        * the description tag that is in the same container.
+        * the csv document flag.
+        * a python variable that tracks the number of instances of each category.
+        * If multiple of these solutions are adopted, devise a way to resolve conflicts by giving an order of priority.
+
+    * It would also be useful for **block images** to link to themselves.
+        * insert a ``<a href="#[insert ID here]>`` tag before every ``<img>`` tag
+        * insert ``</a>`` after every ``</img>`` tag.
+
+
 
 ### <span style="color: darkorange;">Background for Equations:</span>
 
@@ -125,3 +158,55 @@ Have the formatting be settled by an accompanying file, such as a .csv created f
 ### <span style="color: darkorange;">Further Notes:</span>
 
 * It may be useful for python scripting to identify the images that are used as blocks (eg. figures and block equations) based on whether they're contained in `<p>` tags themselves. This may facilitate the formatting.
+
+## Text Formatting
+
+### <span style="color: Chartreuse;">***New!***</span> <span style="color: darkorange;"> Notes on Formatting </span>
+
+* HTML Washer does not automatically transfer any ***bold***, ***italics***, or ***underline*** (also ***highlight***) tags that may be present in the original document.
+
+* Block figure descriptions originally appear in bold, so there may be some benefit in automatically detected and applying bold tags. Alternatively, whatever solution devised must not be to the detriment of the solutions for the block figure formatting.
+
+* There is no simple and appropriate method (that I can think of) to automatically turn generic styling tags such as `<b>`, `<i>`, and `<u>` into semantically meaningful ones such as `<strong>`, `<em>`, and `<strike>`.
+    * The application of semantically meaningful stylization tags would most likely require manual evaluation.
+    * Refer to an HTML guide for a list of semantically meaningful tags that may be useful.
+
+#### <span style="color: Chartreuse;">***New!***</span> <span style="color: darkorange;"> Proposed Solution </span>
+
+* Investigate the original document export. Identify if there is consistency for the formatting tags corresponding to each: ***bold***, ***italics***, or ***underline***, and any combination thereof.
+* Investigate whether HTML Washer eliminates generic styling tags like `<b>`, `<i>`, and `<u>`.
+
+    * If there is consistency & HTML Washer does **NOT** eliminate generic tags:
+        * Create a script that automatically replaces the export tag with the generic tag.
+    
+    * If there is consistency & HTML Washer eliminates generic tags:
+        * Create a script that identifies phrases that feature formatting that can't be otherwise automatically formatted (eg. description elements), such that they are easily manually searchable (ctrl+f).
+        * Identify which part of the phrase requires the tags.
+        * Create a flag for what kind of stylization the phrase requires (*eg. bold, italics, underlyng, or any combination thereof*).
+        
+        <br>
+
+        * Manually review the document an manually insert the appropriate semantic tags based on context (*eg. strong, em, strike, or any combination thereof*)
+            * <span style="color: darkorange; font-weight: bold;">Note!</span> This process may still be useful for the inclusion of appropriate semantic tags even if the inclusion of generic tags can be automated.
+        
+<br>
+
+## Ordered & Unordered Lists
+
+### <span style="color: Chartreuse;">***New!***</span> <span style="color: darkorange;">Notes on Bolding</span>
+
+* Unordered lists tend to have first item be bold.
+* For all list items:
+    * If the line includes a `:`, then all of the text before the LAST `;` will be **bold**, any text after will **NOT**.
+* Unfortunately, there *isn't* a convenient css formatting tool that formats all of the text before a character, so therefore the python script will have to do the formatting.
+    
+#### <span style="color: Chartreuse;">***New!***</span> <span style="color: darkorange;">Proposed Solution</span> (please review)
+
+* For only `<ul>` elements of the first order, IF the element does not include a `;` element:
+    * all direct `<li>` children will be set bold by default.
+* For all `<li>` elements, if it includes the `;` character:
+    * ***HTML option:*** the `<b>` tag will be inserted after the `<li>` tag and the `</b>` tag will be inserted after the `;` character.
+    * ***CSS Solution:*** Use the python script to create `<span>` tags instead with a `class=imperative` attribute, and do the formatting in CSS.
+
+### <span style="color: Chartreuse;">***New!***</span> <span style="color: red;">***CRITICAL!***</span> <span style="color: darkorange;"> Improper HTML Washer List Import </span>
+
